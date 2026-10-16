@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:80"
+    environment:
+      APP_NAME: "eSocial Extrator"
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/database/database.sqlite
+      SESSION_DRIVER: database
+      CACHE_STORE: file
+      QUEUE_CONNECTION: sync
+    volumes:
+      - esocial_database:/var/www/html/database
+      - esocial_storage:/var/www/html/storage
+    restart: unless-stopped
+volumes:
+  esocial_database:
+  esocial_storage:
