@@ -8,7 +8,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 WORKDIR /var/www/html
 COPY . .
-RUN mkdir -p storage/framework/{cache/data,sessions,views} storage/logs bootstrap/cache database \
+RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
+    && rm -f bootstrap/cache/*.php \
     && touch database/database.sqlite \
     && composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts \
     && chown -R www-data:www-data storage bootstrap/cache database \
