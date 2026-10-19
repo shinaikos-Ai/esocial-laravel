@@ -5,3 +5,5 @@ node_modules
 public/build
 storage/logs/*
 database/*.sqlite
+
+public/hot
