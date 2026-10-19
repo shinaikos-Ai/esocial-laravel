@@ -39,3 +39,12 @@ docker compose down
 - O projeto original não possui composer.lock; a versão exata das dependências pode variar durante o build.
 - A inicialização real não foi validada em Docker neste ambiente.
 - Para produção: configure HTTPS, segredos, backup dos volumes, APP_DEBUG=false, política de senhas e autenticação.
+
+
+## Frontend sem Vite
+
+O CSS já está versionado em `public/css/app.css` e é servido pelo Apache.
+Não é necessário executar `npm install` ou `npm run build` no servidor.
+Defina `APP_URL` no ambiente do Compose, por exemplo: `APP_URL=https://seudominio.com docker compose up -d --build`.
+Verifique `curl -I http://localhost:8000/css/app.css` após subir o serviço.
+Para atualizar o CSS, substitua `public/css/app.css` por uma compilação estática compatível com as classes Blade.
