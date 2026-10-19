@@ -1,9 +1,3 @@
-FROM node:22-alpine AS assets
-WORKDIR /app
-COPY package.json vite.config.js ./
-COPY resources ./resources
-RUN npm install --no-audit --no-fund && npm run build
-
 FROM php:8.3-apache
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git unzip libzip-dev libicu-dev libonig-dev libxml2-dev libsqlite3-dev \
@@ -14,7 +8,6 @@ COPY --from=composer:2 /usr/bin/composer /usr/local/bin/composer
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 WORKDIR /var/www/html
 COPY . .
-COPY --from=assets /app/public/build ./public/build
 RUN mkdir -p storage/framework/{cache/data,sessions,views} storage/logs bootstrap/cache database \
     && touch database/database.sqlite \
     && composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts \
